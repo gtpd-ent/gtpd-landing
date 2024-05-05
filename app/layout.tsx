@@ -1,3 +1,4 @@
+import Header from './components/Header';
 import './globals.css';
 import { Inter } from 'next/font/google';
 
@@ -39,9 +40,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} relative bg-gray-50 text-gray-950`}>
-        <div className="absolute -right-48 top-0 -z-10 h-[32rem] w-[32rem] rounded-full bg-rose-100 blur-[8rem] sm:right-16 sm:h-96 sm:w-96 md:right-48 lg:right-72 lg:h-[32rem] lg:w-[32rem] lg:blur-[12rem] xl:right-96" />
-        <div className="absolute -left-48 top-64 -z-10 h-[32rem] w-[32rem] rounded-full bg-indigo-100 blur-[8rem] sm:-left-24 sm:h-96 sm:w-96 md:-left-8 lg:left-4 lg:h-[32rem] lg:w-[32rem] lg:blur-[12rem] xl:left-12" />
+      <body
+        className={`${inter.className} relative bg-gray-50 pt-20 text-gray-950 sm:pt-24`}
+      >
+        <div className="absolute -right-48 top-0 -z-10 size-[32rem] rounded-full bg-rose-200 blur-[8rem] sm:-right-16 md:right-0 md:blur-[12rem] lg:right-24 lg:size-[40rem] xl:right-32 xl:blur-[16rem]" />
+        <div className="absolute -left-48 top-64 -z-10 size-[32rem] rounded-full bg-indigo-200 blur-[8rem] sm:-left-32 md:-left-24 md:blur-[12rem] lg:-left-8 lg:size-[40rem] xl:left-16 xl:blur-[16rem]" />
+        <Header />
         {children}
       </body>
     </html>
