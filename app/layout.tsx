@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'GTPD - Official Site',
+  title: 'GTPD',
   description: 'Discover our latest games, music, and more.',
 };
 
@@ -39,9 +39,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-950`}>
-        <div className="absolute right-[11rem] top-[-6rem] h-[31.25rem] w-[31.25rem] rounded-full bg-[#fbe2e3] blur-[10rem]" />
-        <div />
+      <body className={`${inter.className} relative bg-gray-50 text-gray-950`}>
+        <div className="absolute -right-48 top-0 -z-10 h-[32rem] w-[32rem] rounded-full bg-rose-100 blur-[8rem] sm:right-16 sm:h-96 sm:w-96 md:right-48 lg:right-72 lg:h-[32rem] lg:w-[32rem] lg:blur-[12rem] xl:right-96" />
+        <div className="absolute -left-48 top-64 -z-10 h-[32rem] w-[32rem] rounded-full bg-indigo-100 blur-[8rem] sm:-left-24 sm:h-96 sm:w-96 md:-left-8 lg:left-4 lg:h-[32rem] lg:w-[32rem] lg:blur-[12rem] xl:left-12" />
         {children}
       </body>
     </html>
