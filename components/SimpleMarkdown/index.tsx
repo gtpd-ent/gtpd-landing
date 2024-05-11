@@ -1,11 +1,11 @@
 import React from 'react';
 
 type Props = {
-  text: string;
   className?: string;
+  text: string;
 };
 
-const SimpleMarkdown: React.FC<Props> = ({ text, className }) => {
+const SimpleMarkdown: React.FC<Props> = ({ className, text }) => {
   const markdownRegex = /\*\*\*(.*?)\*\*\*|\*\*(.*?)\*\*|\*(.*?)\*|_(.*?)_/g;
 
   const formattedText = text.replace(

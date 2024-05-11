@@ -1,6 +1,7 @@
 import React from 'react';
-import Intro from '@/app/components/Intro';
+
 import Divider from './components/Divider';
+import Intro from './components/Intro';
 
 export default function Home() {
   return (
