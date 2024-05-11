@@ -1,14 +1,18 @@
 import React from 'react';
 
 type Props = {
+  children: string;
   className?: string;
-  text: string;
+  Tag?: Extract<
+    keyof JSX.IntrinsicElements,
+    'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
+  >;
 };
 
-const SimpleMarkdown: React.FC<Props> = ({ className, text }) => {
+const SimpleMarkdown = ({ children, className, Tag = 'p' }: Props) => {
   const markdownRegex = /\*\*\*(.*?)\*\*\*|\*\*(.*?)\*\*|\*(.*?)\*|_(.*?)_/g;
 
-  const formattedText = text.replace(
+  const formattedText = children.replace(
     markdownRegex,
     (match, italicBold, bold, italic, underlined) =>
       (italicBold && `<strong><em>${italicBold}</em></strong>`) ||
@@ -19,7 +23,7 @@ const SimpleMarkdown: React.FC<Props> = ({ className, text }) => {
   );
 
   return (
-    <p
+    <Tag
       className={className}
       dangerouslySetInnerHTML={{ __html: formattedText }}
     />

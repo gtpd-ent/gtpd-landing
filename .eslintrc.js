@@ -5,6 +5,9 @@ module.exports = {
     'plugin:react/recommended',
     'prettier',
   ],
+  globals: {
+    JSX: true,
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,

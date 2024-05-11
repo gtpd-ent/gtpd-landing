@@ -54,8 +54,12 @@ const Intro = () => {
       >
         <SimpleMarkdown
           className="mb-12 mt-8 px-8 text-xl font-medium sm:mt-16 sm:text-4xl"
-          text="**Hello, I'm Ricardo.** I'm a **full stack developer** with **3 years** of experience. I enjoy building *sites & apps*. My focus is _React (Next.js)_"
-        />
+          Tag="h1"
+        >
+          **Hello, I&apos;m Ricardo.** I&apos;m a **full stack developer** with
+          **3 years** of experience. I enjoy building *sites & apps*. My focus
+          is _React (Next.js)_
+        </SimpleMarkdown>
       </motion.div>
       <motion.div
         animate={{ opacity: 1, y: 0 }}
