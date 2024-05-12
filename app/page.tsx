@@ -3,6 +3,7 @@ import React from 'react';
 import About from './screens/About';
 import Divider from './components/Divider';
 import Intro from './screens/Intro';
+import Projects from './screens/Projects';
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Intro />
       <Divider />
       <About />
+      <Projects />
     </main>
   );
 }

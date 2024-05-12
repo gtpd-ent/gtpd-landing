@@ -3,6 +3,7 @@ module.exports = {
     'next/core-web-vitals',
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:tailwindcss/recommended',
     'prettier',
   ],
   globals: {
@@ -34,6 +35,8 @@ module.exports = {
       },
     ],
     'no-console': 'warn',
+    'no-duplicate-imports': 'warn',
+    'no-unused-vars': 'warn',
     'no-var': 'error',
     'perfectionist/sort-object-types': ['warn', { 'ignore-case': true }],
     'prefer-const': 'error',
@@ -44,6 +47,7 @@ module.exports = {
       'warn',
       { callbacksLast: false, ignoreCase: true, shorthandFirst: false },
     ],
+    'react/self-closing-comp': 'warn',
     'sort-destructure-keys/sort-destructure-keys': [
       'warn',
       { caseSensitive: false },
