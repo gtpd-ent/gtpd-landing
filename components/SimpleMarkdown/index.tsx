@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {
+type SimpleMarkdownProps = {
   children: string;
   className?: string;
   Tag?: Extract<
@@ -9,7 +9,11 @@ type Props = {
   >;
 };
 
-const SimpleMarkdown = ({ children, className, Tag = 'p' }: Props) => {
+const SimpleMarkdown = ({
+  children,
+  className,
+  Tag = 'p',
+}: SimpleMarkdownProps) => {
   const markdownRegex = /\*\*\*(.*?)\*\*\*|\*\*(.*?)\*\*|\*(.*?)\*|_(.*?)_/g;
 
   const formattedText = children.replace(

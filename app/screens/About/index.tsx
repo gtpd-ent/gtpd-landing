@@ -4,15 +4,20 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 import SimpleMarkdown from '@/components/SimpleMarkdown';
+import { useSectionInView } from '@/lib/hooks';
 
 import SectionTitle from '../../components/SectionTitle';
 
 const About = () => {
+  const { ref } = useSectionInView('About', 0.8);
+
   return (
     <motion.section
       animate={{ opacity: 1, y: 0 }}
-      className="my-28 max-w-3xl text-center leading-8 sm:mb-40"
+      className="my-28 max-w-3xl scroll-mt-36 text-center leading-8 sm:mb-40"
+      id="about"
       initial={{ opacity: 0, y: 100 }}
+      ref={ref}
       transition={{ delay: 0.4 }}
     >
       <SectionTitle>About me</SectionTitle>

@@ -1,10 +1,10 @@
 import React from 'react';
 
-type Props = {
+type SectionTitleProps = {
   children: React.ReactNode;
 };
 
-const SectionTitle = ({ children }: Props) => {
+const SectionTitle = ({ children }: SectionTitleProps) => {
   return (
     <h2 className="mb-8 text-center text-3xl font-medium capitalize">
       {children}

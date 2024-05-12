@@ -8,11 +8,17 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { BsArrowRight, BsLinkedin } from 'react-icons/bs';
 
-import SimpleMarkdown from '../../../components/SimpleMarkdown';
+import SimpleMarkdown from '@/components/SimpleMarkdown';
+import { useSectionInView } from '@/lib/hooks';
 
 const Intro = () => {
+  const { ref } = useSectionInView('Home');
   return (
-    <section className="my-32 max-w-4xl text-center">
+    <section
+      className="my-32 max-w-4xl scroll-mt-[100rem] text-center"
+      id="home"
+      ref={ref}
+    >
       <div className="flex items-center justify-center">
         <div className="relative">
           <motion.div

@@ -6,9 +6,14 @@ import React, { useRef } from 'react';
 
 import { projectsData } from '@/lib/data';
 
-type Props = (typeof projectsData)[number];
+type ProjectCardProps = (typeof projectsData)[number];
 
-const ProjectCard = ({ description, imageUrl, tags, title }: Props) => {
+const ProjectCard = ({
+  description,
+  imageUrl,
+  tags,
+  title,
+}: ProjectCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     offset: ['0 1', '1.33 1'],

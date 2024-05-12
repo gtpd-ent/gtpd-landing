@@ -1,32 +1,52 @@
 'use client';
+import clsx from 'clsx';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import React from 'react';
 
 import { links } from '@/lib/data';
+import { useActiveSectionContext } from '@/lib/hooks';
 
 const Header = () => {
+  const { activeSection, setActiveSection, setTimeOfLastClick } =
+    useActiveSectionContext();
   return (
     <header className="relative z-[999]">
       <motion.div
         animate={{ opacity: 1, x: '-50%', y: 0 }}
-        className="fixed left-1/2 top-0 h-20 w-full rounded-none border border-white border-opacity-50 bg-white bg-opacity-50 shadow-lg shadow-black/5 backdrop-blur-md sm:mt-8 sm:h-16 sm:w-[48rem] sm:rounded-full"
+        className="fixed left-1/2 top-0 h-24 w-full rounded-none border border-white/50 bg-white/50 shadow-lg shadow-black/5 backdrop-blur-md sm:mt-8 sm:h-16 sm:w-[48rem] sm:rounded-full"
         initial={{ opacity: 0, x: '-50%', y: -100 }}
-      ></motion.div>
-      <nav className="fixed left-1/2 top-0 flex h-20 w-full -translate-x-1/2 py-2 sm:mt-8 sm:h-16 sm:py-0">
-        <ul className="flex w-full flex-wrap items-center justify-center text-base font-medium text-gray-500 sm:flex-nowrap sm:gap-5">
-          {links.map((link) => (
+      />
+      <nav className="fixed left-1/2 top-0 flex h-24 w-full -translate-x-1/2 justify-center py-2 sm:mt-8 sm:h-16 sm:py-0">
+        <ul className="flex w-full flex-wrap items-center justify-center gap-x-2 px-4 text-base font-medium text-gray-500 sm:w-[48rem] sm:flex-nowrap sm:justify-between sm:gap-5">
+          {links.map(({ hash, name }) => (
             <motion.li
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center justify-center"
+              className="relative flex items-center justify-center"
               initial={{ opacity: 0, y: -100 }}
-              key={link.hash}
+              key={hash}
             >
               <Link
-                className="flex w-full items-start justify-center px-3 transition hover:text-gray-950"
-                href={link.hash}
+                className={clsx(
+                  'flex w-full items-start justify-center px-3 py-1 transition hover:text-gray-950 sm:px-4 sm:py-2',
+                  {
+                    'text-gray-950': activeSection === name,
+                  },
+                )}
+                href={hash}
+                onClick={() => {
+                  setTimeOfLastClick(Date.now());
+                  setActiveSection(name);
+                }}
               >
-                {link.name}
+                {name}
+                {name === activeSection && (
+                  <motion.span
+                    className="absolute inset-0 -z-10 rounded-xl bg-gray-100 sm:rounded-full"
+                    layoutId="activeSection"
+                    transition={{ damping: 30, stiffness: 400, type: 'spring' }}
+                  />
+                )}
               </Link>
             </motion.li>
           ))}
