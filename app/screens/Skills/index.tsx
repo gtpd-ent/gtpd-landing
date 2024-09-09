@@ -10,7 +10,7 @@ import { useSectionInView } from '@/lib/hooks';
 const fadeInAnimationVariants = {
   animate: (custom: number) => ({
     opacity: 1,
-    transition: { delay: custom * 0.05 },
+    transition: { delay: custom * 0.02 },
     y: 0,
   }),
   initial: {
@@ -37,7 +37,6 @@ const Skills = () => {
             initial="initial"
             key={index}
             variants={fadeInAnimationVariants}
-            viewport={{ once: true }}
             whileInView="animate"
           >
             {skill}
