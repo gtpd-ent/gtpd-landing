@@ -24,7 +24,7 @@ const Skills = () => {
 
   return (
     <section
-      className="mb-28 max-w-[50rem] scroll-mt-28 text-center sm:mb-40"
+      className="mb-28 max-w-[50rem] scroll-mt-36 text-center sm:mb-40"
       id="skills"
       ref={ref}
     >
@@ -32,7 +32,7 @@ const Skills = () => {
       <ul className="flex flex-wrap justify-center gap-2 text-lg text-gray-800">
         {skillsData.map((skill, index) => (
           <motion.li
-            className="rounded-xl border border-black/[0.1] bg-white px-5 py-3"
+            className="borderBlack rounded-xl bg-white px-5 py-3"
             custom={index}
             initial="initial"
             key={index}

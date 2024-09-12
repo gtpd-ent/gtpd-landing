@@ -17,7 +17,7 @@ const Experience = () => {
   const { inView, ref } = useSectionInView('Experience');
 
   return (
-    <section id="experience" ref={ref}>
+    <section className="mb-28 scroll-mt-36 sm:mb-40" id="experience" ref={ref}>
       <SectionTitle>My Experience</SectionTitle>
       <VerticalTimeline lineColor="">
         {experiencesData.map(

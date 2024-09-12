@@ -1,6 +1,7 @@
 import React from 'react';
 
 import About from './screens/About';
+import Contact from './screens/Contact';
 import Divider from './components/Divider';
 import Experience from './screens/Experience';
 import Intro from './screens/Intro';
@@ -16,6 +17,7 @@ export default function Home() {
       <Projects />
       <Skills />
       <Experience />
+      <Contact />
     </main>
   );
 }

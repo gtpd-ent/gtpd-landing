@@ -11,7 +11,7 @@ import ProjectCard from './components/ProjectCard';
 const Projects = () => {
   const { ref } = useSectionInView('Projects');
   return (
-    <section className="mb-28 scroll-mt-28" id="projects" ref={ref}>
+    <section className="mb-28 scroll-mt-36" id="projects" ref={ref}>
       <SectionTitle>My Projects</SectionTitle>
       <div>
         {projectsData.map((project, index) => (

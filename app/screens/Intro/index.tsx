@@ -9,10 +9,11 @@ import React from 'react';
 import { BsArrowRight, BsLinkedin } from 'react-icons/bs';
 
 import SimpleMarkdown from '@/components/SimpleMarkdown';
-import { useSectionInView } from '@/lib/hooks';
+import { useActiveSectionContext, useSectionInView } from '@/lib/hooks';
 
 const Intro = () => {
   const { ref } = useSectionInView('Home');
+  const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext();
   return (
     <section
       className="my-32 max-w-4xl scroll-mt-[100rem] text-center"
@@ -78,12 +79,16 @@ const Intro = () => {
         <Link
           className="group flex items-center gap-2 rounded-full bg-gray-900 px-7 py-3 text-white outline-none transition hover:scale-110 hover:bg-gray-950 focus:scale-110 active:scale-105"
           href="#contact"
+          onClick={() => {
+            setActiveSection('Contact');
+            setTimeOfLastClick(Date.now());
+          }}
         >
           Contact me here
           <BsArrowRight className="opacity-70 transition group-hover:translate-x-1" />
         </Link>
         <a
-          className="group flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
+          className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
           download
           href="/CV.pdf"
         >
@@ -92,7 +97,7 @@ const Intro = () => {
         </a>
         <div className="flex gap-2">
           <a
-            className="flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+            className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
             href="https://linkedin.com"
             rel="noreferrer"
             target="_blank"
@@ -100,7 +105,7 @@ const Intro = () => {
             <BsLinkedin />
           </a>
           <a
-            className="flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+            className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
             href="https://guthib.com"
             rel="noreferrer"
             target="_blank"
