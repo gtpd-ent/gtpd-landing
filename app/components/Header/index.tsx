@@ -14,7 +14,7 @@ const Header = () => {
     <header className="relative z-[999]">
       <motion.div
         animate={{ opacity: 1, x: '-50%', y: 0 }}
-        className="fixed left-1/2 top-0 h-24 w-full rounded-none border border-white/50 bg-white/50 shadow-lg shadow-black/5 backdrop-blur-md sm:mt-8 sm:h-16 sm:w-[48rem] sm:rounded-full"
+        className="fixed left-1/2 top-0 h-24 w-full rounded-none border border-white/50 bg-white/50 shadow-lg shadow-black/5 backdrop-blur-md dark:border-black/40 dark:bg-gray-950/75 sm:mt-8 sm:h-16 sm:w-[48rem] sm:rounded-full"
         initial={{ opacity: 0, x: '-50%', y: -100 }}
       />
       <nav className="fixed left-1/2 top-0 flex h-24 w-full -translate-x-1/2 justify-center py-2 sm:mt-8 sm:h-16 sm:py-0">
@@ -28,9 +28,9 @@ const Header = () => {
             >
               <Link
                 className={clsx(
-                  'flex w-full items-start justify-center px-3 py-1 transition hover:text-gray-950 sm:px-4 sm:py-2',
+                  'flex w-full items-start justify-center px-3 py-1 transition hover:text-gray-950 dark:text-gray-500 dark:hover:text-gray-300 sm:px-4 sm:py-2',
                   {
-                    'text-gray-950': activeSection === name,
+                    'text-gray-950 dark:text-gray-200': activeSection === name,
                   },
                 )}
                 href={hash}
@@ -42,7 +42,7 @@ const Header = () => {
                 {name}
                 {name === activeSection && (
                   <motion.span
-                    className="absolute inset-0 -z-10 rounded-xl bg-gray-100 sm:rounded-full"
+                    className="absolute inset-0 -z-10 rounded-xl bg-gray-100 dark:bg-gray-800 sm:rounded-full"
                     layoutId="activeSection"
                     transition={{ damping: 30, stiffness: 400, type: 'spring' }}
                   />

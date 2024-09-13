@@ -88,7 +88,7 @@ const Intro = () => {
           <BsArrowRight className="opacity-70 transition group-hover:translate-x-1" />
         </Link>
         <a
-          className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
+          className="borderBlack group flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105 dark:bg-white/10"
           download
           href="/CV.pdf"
         >
@@ -97,7 +97,7 @@ const Intro = () => {
         </a>
         <div className="flex gap-2">
           <a
-            className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+            className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60"
             href="https://linkedin.com"
             rel="noreferrer"
             target="_blank"
@@ -105,7 +105,7 @@ const Intro = () => {
             <BsLinkedin />
           </a>
           <a
-            className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+            className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60"
             href="https://guthib.com"
             rel="noreferrer"
             target="_blank"

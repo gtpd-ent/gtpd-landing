@@ -23,7 +23,7 @@ const Contact = () => {
       whileInView={{ opacity: 1 }}
     >
       <SectionTitle>Contact Me</SectionTitle>
-      <p className="-mt-6  text-gray-700">
+      <p className="-mt-6  text-gray-700 dark:text-white/80">
         Please contact em directly at{' '}
         <a className="underline" href="mailto:example@gmail.cgom">
           example@gmail.com
@@ -39,10 +39,10 @@ const Contact = () => {
           }
           toast.success('Message sent successfully');
         }}
-        className="mt-10 flex flex-col"
+        className="mt-10 flex flex-col dark:text-black"
       >
         <input
-          className="borderBlack h-14 rounded-lg px-4"
+          className="borderBlack h-14 rounded-lg px-4 transition-all  dark:bg-white/80 dark:text-black dark:outline-none dark:focus:bg-white"
           maxLength={500}
           name="senderEmail"
           placeholder="Your email"
@@ -50,7 +50,7 @@ const Contact = () => {
           type="email"
         />
         <textarea
-          className="borderBlack my-3 h-52 rounded-lg p-4"
+          className="borderBlack my-3 h-52 rounded-lg p-4 dark:bg-white/80 dark:text-black dark:outline-none dark:focus:bg-white"
           maxLength={5000}
           name="message"
           placeholder="Your message"

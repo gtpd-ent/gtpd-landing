@@ -2,6 +2,7 @@ import { useInView } from 'react-intersection-observer';
 import { useContext, useEffect } from 'react';
 
 import { ActiveSectionContext } from '@/context/ActiveSection/utils';
+import { ThemeContext } from '@/context/Theme/utils';
 
 import type { SectionName } from './types';
 
@@ -27,4 +28,14 @@ export const useSectionInView = (sectionName: SectionName, threshold = 0.5) => {
   }, [inView, setActiveSection, timeOfLastClick, sectionName]);
 
   return { inView, ref };
+};
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+
+  if (context === null) {
+    throw new Error('useTheme must be used within a ThemeContextProvider');
+  }
+
+  return context;
 };

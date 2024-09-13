@@ -4,9 +4,11 @@ import { Toaster } from 'react-hot-toast';
 import './globals.css';
 
 import ActiveSectionContextProvider from '@/context/ActiveSection';
+import ThemeContextProvider from '@/context/Theme';
 
 import Footer from './screens/Footer';
 import Header from './components/Header';
+import ThemeSwitch from './components/ThemeSwitch';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -46,17 +48,20 @@ export default function RootLayout({
   return (
     <html className="!scroll-smooth" lang="en">
       <body
-        className={`${inter.className} relative bg-gray-50 pt-20 text-gray-950 sm:pt-24`}
+        className={`${inter.className} relative bg-gray-50 pt-20 text-gray-950 dark:bg-gray-900 dark:text-gray-50 dark:text-opacity-90 sm:pt-24`}
       >
-        <div className="absolute -right-48 top-0 -z-10 size-[32rem] rounded-full bg-rose-200 blur-[8rem] sm:-right-16 md:right-0 md:blur-[12rem] lg:right-24 lg:size-[40rem] xl:right-32 xl:blur-[16rem]" />
-        <div className="absolute -left-48 top-64 -z-10 size-[32rem] rounded-full bg-indigo-200 blur-[8rem] sm:-left-32 md:-left-24 md:blur-[12rem] lg:-left-8 lg:size-[40rem] xl:left-16 xl:blur-[16rem]" />
+        <div className="absolute -right-48 top-0 -z-10 size-[32rem] rounded-full bg-rose-200 blur-[8rem] dark:bg-[#946263] sm:-right-16 md:right-0 md:blur-[12rem] lg:right-24 lg:size-[40rem] xl:right-32 xl:blur-[16rem]" />
+        <div className=" absolute -left-48 top-64 -z-10 size-[32rem] rounded-full bg-indigo-200 blur-[8rem] dark:bg-[#676394] sm:-left-32 md:-left-24 md:blur-[12rem] lg:-left-8 lg:size-[40rem] xl:left-16 xl:blur-[16rem]" />
 
-        <ActiveSectionContextProvider>
-          <Header />
-          {children}
-          <Footer />
-          <Toaster position="top-right" />
-        </ActiveSectionContextProvider>
+        <ThemeContextProvider>
+          <ActiveSectionContextProvider>
+            <Header />
+            {children}
+            <Footer />
+            <Toaster position="top-right" />
+            <ThemeSwitch />
+          </ActiveSectionContextProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   );

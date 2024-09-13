@@ -32,7 +32,7 @@ const Skills = () => {
       <ul className="flex flex-wrap justify-center gap-2 text-lg text-gray-800">
         {skillsData.map((skill, index) => (
           <motion.li
-            className="borderBlack rounded-xl bg-white px-5 py-3"
+            className="borderBlack rounded-xl bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80"
             custom={index}
             initial="initial"
             key={index}
