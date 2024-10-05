@@ -46,7 +46,10 @@ export const getAccessToken = async (client_id: string, code: string) => {
   params.append('client_id', client_id);
   params.append('grant_type', 'authorization_code');
   params.append('code', code);
-  params.append('redirect_uri', 'http://localhost:3000/');
+  params.append(
+    'redirect_uri',
+    'https://gtpd-landing-git-spotify-demo-gtpds-projects.vercel.app/',
+  );
   params.append('code_verifier', verifier!);
 
   const response = await fetch('https://accounts.spotify.com/api/token', {
