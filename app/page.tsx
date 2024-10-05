@@ -7,11 +7,13 @@ import Experience from './screens/Experience';
 import Intro from './screens/Intro';
 import Projects from './screens/Projects';
 import Skills from './screens/Skills';
+import SpotifyDemo from './screens/SpotifyDemo';
 
 export default function Home() {
   return (
     <main className="flex flex-col items-center">
       <Intro />
+      <SpotifyDemo />
       <Divider />
       <About />
       <Projects />
