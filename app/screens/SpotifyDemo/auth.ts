@@ -22,22 +22,18 @@ export const redirectToAuth = async (client_id: string) => {
   const verifier = generateCodeVerifier(128);
   const challenge = await generateCodeChallenge(verifier);
 
-  console.log('Generated verifier', verifier);
-
   localStorage.setItem('verifier', verifier);
 
   const params = new URLSearchParams();
   params.append('client_id', client_id);
   params.append('response_type', 'code');
+  params.append('redirect_uri', process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI!);
   params.append(
-    'redirect_uri',
-    'https://gtpd-landing-git-spotify-demo-gtpds-projects.vercel.app/',
+    'scope',
+    'user-read-private user-read-email user-follow-read user-library-read playlist-modify-public playlist-modify-private',
   );
-  params.append('scope', 'user-read-private user-read-email');
   params.append('code_challenge_method', 'S256');
   params.append('code_challenge', challenge);
-
-  console.log('Redirecting to Spotify auth', params.toString());
 
   window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
 };
@@ -49,30 +45,18 @@ export const getAccessToken = async (client_id: string, code: string) => {
   params.append('client_id', client_id);
   params.append('grant_type', 'authorization_code');
   params.append('code', code);
-  params.append(
-    'redirect_uri',
-    'https://gtpd-landing-git-spotify-demo-gtpds-projects.vercel.app/',
-  );
+  params.append('redirect_uri', process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI!);
   params.append('code_verifier', verifier!);
 
   const response = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
+    body: params,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: params,
+    method: 'POST',
   });
 
   const { access_token } = await response.json();
 
   return access_token;
-};
-
-export const fetchProfile = async (access_token: string) => {
-  const response = await fetch('https://api.spotify.com/v1/me', {
-    method: 'GET',
-    headers: { Authorization: `Bearer ${access_token}` },
-  });
-
-  return await response.json();
 };

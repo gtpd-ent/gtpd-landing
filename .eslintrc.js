@@ -36,7 +36,7 @@ module.exports = {
     ],
     'no-console': 'warn',
     'no-duplicate-imports': 'warn',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'no-var': 'error',
     'perfectionist/sort-object-types': ['warn', { 'ignore-case': true }],
     'prefer-const': 'error',

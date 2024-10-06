@@ -1,38 +1,45 @@
 'use client';
 
-import React, { Fragment, useEffect, useState } from 'react';
-import { FaSpotify } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+import React, { useEffect, useState } from 'react';
 
-import { fetchProfile, getAccessToken, redirectToAuth } from './utils';
+import {
+  ArtistInterface,
+  FollowedArtistsInterface,
+  SavedTracksInterface,
+  UserProfileInterface,
+} from '@/types';
 
-interface UserProfile {
-  country: string;
-  display_name: string;
-  email: string;
-  explicit_content: {
-    filter_enabled: boolean;
-    filter_locked: boolean;
-  };
-  external_urls: { spotify: string };
-  followers: { href: string; total: number };
-  href: string;
-  id: string;
-  images: Image[];
-  product: string;
-  type: string;
-  uri: string;
-}
-
-interface Image {
-  url: string;
-  height: number;
-  width: number;
-}
+import { CLIENT_ID } from './constants';
+import Dashboard from './components/Dashboard';
+import Welcome from './components/Welcome';
+import {
+  addPlaylist,
+  addTracksToPlaylist,
+  fetchAllFollowedArtists,
+  fetchAllSavedTracks,
+  fetchProfile,
+} from './fetch';
+import { getAccessToken, redirectToAuth } from './auth';
 
 const SpotifyDemo = () => {
-  const [userProfile, setUserProfile] = useState<UserProfile>();
-  const [code, setCode] = useState<string | null>();
-  const client_id = 'b1b6263c568c4e9b8934d339c49cc649';
+  const [userProfile, setUserProfile] = useState<UserProfileInterface | null>(
+    null,
+  );
+  const [followedArtists, setFollowedArtists] =
+    useState<FollowedArtistsInterface | null>(null);
+  const [selectedArtists, setSelectedArtists] = useState<ArtistInterface[]>([]);
+
+  const [selectedTracks, setSelectedTracks] = useState<SavedTracksInterface>({
+    items: [],
+    total: 0,
+  });
+  const [savedTracks, setSavedTracks] = useState<SavedTracksInterface | null>(
+    null,
+  );
+
+  const [code, setCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -40,71 +47,122 @@ const SpotifyDemo = () => {
     setCode(code);
   }, []);
 
+  useEffect(() => {
+    if (savedTracks) {
+      const fiteredTracks = savedTracks?.items
+        .filter((track) => {
+          return selectedArtists.some((artist) => {
+            return track.track.artists.some(
+              (trackArtist) => trackArtist.id === artist.id,
+            );
+          });
+        })
+        .sort((a, b) => {
+          const nameA = a.track.name.toUpperCase();
+          const nameB = b.track.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
+
+      setSelectedTracks({
+        items: fiteredTracks,
+        total: fiteredTracks?.length || 0,
+      });
+    }
+  }, [selectedArtists, savedTracks]);
+
   const handleClick = async () => {
+    setLoading(true);
     if (!code) {
-      redirectToAuth(client_id);
+      redirectToAuth(CLIENT_ID);
     } else {
-      const access_token = await getAccessToken(client_id, code);
+      const access_token = await getAccessToken(CLIENT_ID, code);
       const profile = await fetchProfile(access_token);
 
       if (profile.error) {
-        console.error('Error fetching profile', profile.error);
-        redirectToAuth(client_id);
+        toast.error('Hubo un error de autorizacion.');
+        setTimeout(() => {
+          redirectToAuth(CLIENT_ID);
+        }, 1000);
         return;
       }
 
-      console.log('Profile', profile);
+      const followedArtists = await fetchAllFollowedArtists(access_token);
+
+      const savedTracks = await fetchAllSavedTracks(access_token);
+
+      setSavedTracks(savedTracks);
+      setFollowedArtists(followedArtists);
       setUserProfile(profile);
+    }
+    setLoading(false);
+  };
+
+  const selectArtist = (id: string) => {
+    const artist = followedArtists?.items.find((artist) => artist.id === id);
+    if (artist) {
+      setSelectedArtists([...selectedArtists, artist]);
     }
   };
 
-  const { display_name, email, external_urls, href, id, images, uri } =
-    userProfile || {};
+  const unselectArtist = (id: string) => {
+    setSelectedArtists(selectedArtists.filter((artist) => artist.id !== id));
+  };
+
+  const createPlaylist = async () => {
+    // setLoading(true);
+    // const tracks = selectedTracks.items.map((track) => track.track.uri);
+    // const artistNames = selectedArtists.map((artist) => artist.name).join(', ');
+    // const playlistName = `Ritmia - ${artistNames}`;
+    // const access_token = await getAccessToken(CLIENT_ID, code!);
+    // const playlistResponse = await addPlaylist(
+    //   access_token,
+    //   userProfile!.id,
+    //   playlistName,
+    // );
+    // if (playlistResponse.error) {
+    //   toast.error('Hubo un error al crear la playlist.');
+    //   setLoading(false);
+    //   return;
+    // }
+    // const tracksResponse = await addTracksToPlaylist(
+    //   access_token,
+    //   playlistResponse.id,
+    //   tracks,
+    // );
+    // if (tracksResponse.error) {
+    //   toast.error('Hubo un error al crear la playlist.');
+    //   setLoading(false);
+    //   return;
+    // }
+    // toast.success('Playlist creada con exito!');
+    // setLoading(false);
+  };
 
   return (
-    <Fragment>
-      <h1 className="mb-8 text-4xl font-bold">Spotify Demo</h1>
-      <button
-        className="borderBlack mb-8 flex items-center gap-4 rounded-full bg-gray-900 px-4 py-2 text-2xl font-light transition hover:scale-[1.15] focus:scale-[1.15] active:scale-105"
-        onClick={handleClick}
-      >
-        <FaSpotify size={28} />
-        <h2>{!code ? 'Login with Spotify' : 'Get your Spotify data'}</h2>
-      </button>
-      {userProfile && (
-        <section className="flex w-fit flex-col">
-          <div className="borderBlack mb-4 flex w-fit items-center gap-3 rounded-full bg-gray-900 px-4 py-2">
-            {images?.[0] && (
-              <img
-                alt="Profile"
-                className="size-10 rounded-full"
-                src={images[0].url}
-              />
-            )}
-            <p>{display_name}</p>
-          </div>
-          <ul>
-            <li>User ID: {id}</li>
-            <li>Email: {email}</li>
-            <li>
-              Spotify URI:{' '}
-              <a
-                className="text-blue-300 underline"
-                href={external_urls?.spotify}
-              >
-                {uri}
-              </a>
-            </li>
-            <li>
-              Link:{' '}
-              <a className="text-blue-300 underline" href={href}>
-                {href}
-              </a>
-            </li>
-          </ul>
-        </section>
+    <section className="mt-32 flex w-full flex-col items-center justify-center">
+      {!userProfile ? (
+        <Welcome {...{ code, handleClick, loading }} />
+      ) : (
+        <Dashboard
+          {...{
+            createPlaylist,
+            followedArtists,
+            loading,
+            selectArtist,
+            selectedArtists,
+            selectedTracks,
+            unselectArtist,
+            userProfile,
+          }}
+        />
       )}
-    </Fragment>
+    </section>
   );
 };
 
