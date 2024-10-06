@@ -162,18 +162,40 @@ export const addTracksToPlaylist = async (
   access_token: string,
   playlist_id: string,
   track_uris: string[],
+  setLoading: any,
 ) => {
-  const response = await fetch(
-    `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
-    {
-      body: JSON.stringify({ uris: track_uris }),
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    },
-  );
+  const chunkSize = 100; // Spotify API limit
+  const uriChunks = [];
 
-  return await response.json();
+  for (let i = 0; i < track_uris.length; i += chunkSize) {
+    const chunk = track_uris.slice(i, i + chunkSize);
+    uriChunks.push(chunk);
+  }
+
+  const addChunkToPlaylist = async (uris: string[]) => {
+    const response = await fetch(
+      `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
+      {
+        body: JSON.stringify({ uris }),
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      },
+    );
+    return await response.json();
+  };
+
+  for (const chunk of uriChunks) {
+    try {
+      await addChunkToPlaylist(chunk);
+    } catch (error) {
+      setLoading(false);
+      toast.error('Error adding tracks to playlist');
+      throw new Error('Failed to add tracks to playlist.');
+    }
+  }
+
+  setLoading(false);
 };

@@ -148,16 +148,14 @@ const SpotifyDemo = () => {
       setLoading(false);
       return;
     }
-    const tracksResponse = await addTracksToPlaylist(
+
+    await addTracksToPlaylist(
       accessToken!,
       playlistResponse.id,
       tracks,
+      setLoading,
     );
-    if (tracksResponse.error) {
-      toast.error('Hubo un error al crear la playlist.');
-      setLoading(false);
-      return;
-    }
+
     toast.success('Playlist creada con exito!');
     setLoading(false);
   };
