@@ -58,7 +58,43 @@ export const fetchSavedTracks = async (access_token: string) => {
   return await response.json();
 };
 
-export const fetchAllSavedTracks = async (access_token: string) => {
+type TracksLoadingType = {
+  current: number;
+  loading: boolean;
+  total: number;
+};
+
+const smoothIncrement = (
+  finalValue: number,
+  incrementStep: number,
+  delay: number,
+  setTracksLoading: any,
+  loading: boolean,
+  total: number,
+) => {
+  const incrementer = setInterval(() => {
+    setTracksLoading((prevState: TracksLoadingType) => {
+      if (prevState.current + incrementStep >= finalValue) {
+        clearInterval(incrementer);
+        return {
+          current: finalValue,
+          loading,
+          total,
+        };
+      }
+      return {
+        current: prevState.current + incrementStep,
+        loading: true,
+        total,
+      };
+    });
+  }, delay);
+};
+
+export const fetchAllSavedTracks = async (
+  access_token: string,
+  setTracksLoading: any,
+) => {
   let savedTracks: TrackInterface[] = [];
   let next = 'https://api.spotify.com/v1/me/tracks?limit=50';
   while (next) {
@@ -74,9 +110,27 @@ export const fetchAllSavedTracks = async (access_token: string) => {
       break;
     }
 
+    smoothIncrement(
+      savedTracks.length,
+      1,
+      20,
+      setTracksLoading,
+      true,
+      data.total,
+    );
+
     savedTracks = savedTracks.concat(data.items);
     next = data.next;
   }
+
+  smoothIncrement(
+    savedTracks.length,
+    1,
+    1,
+    setTracksLoading,
+    false,
+    savedTracks.length,
+  );
 
   return { items: savedTracks, total: savedTracks.length };
 };

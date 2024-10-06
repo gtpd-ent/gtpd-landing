@@ -12,23 +12,25 @@ import SavedTracks from './components/SavedTracks';
 import UserBadge from './components/UserBadge';
 
 type DashboardType = {
+  artistsLoading: boolean;
   createPlaylist: () => void;
   followedArtists: FollowedArtistsInterface | null;
-  loading: boolean;
   selectArtist: (_id: string) => void;
   selectedArtists: ArtistInterface[];
   selectedTracks: SavedTracksInterface | null;
+  tracksLoading: { current: number; loading: boolean; total: number };
   unselectArtist: (_id: string) => void;
   userProfile: UserProfileInterface | null;
 };
 
 const Dashboard = ({
+  artistsLoading,
   createPlaylist,
   followedArtists,
-  loading,
   selectArtist,
   selectedArtists,
   selectedTracks,
+  tracksLoading,
   unselectArtist,
   userProfile,
 }: DashboardType) => {
@@ -40,6 +42,7 @@ const Dashboard = ({
         {followedArtists && (
           <FollowedArtists
             {...{
+              artistsLoading,
               followedArtists,
               selectArtist,
               selectedArtists,
@@ -49,7 +52,12 @@ const Dashboard = ({
         )}
         {selectedTracks && (
           <SavedTracks
-            {...{ createPlaylist, loading, selectedArtists, selectedTracks }}
+            {...{
+              createPlaylist,
+              selectedArtists,
+              selectedTracks,
+              tracksLoading,
+            }}
           />
         )}
       </div>

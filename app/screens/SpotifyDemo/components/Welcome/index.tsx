@@ -2,12 +2,11 @@ import { FaSpotify } from 'react-icons/fa';
 import React, { Fragment } from 'react';
 
 type WelcomeType = {
-  code: string | null;
   handleClick: () => void;
   loading: boolean;
 };
 
-const Welcome = ({ code, handleClick, loading }: WelcomeType) => {
+const Welcome = ({ handleClick, loading }: WelcomeType) => {
   return (
     <Fragment>
       <h1 className="mb-16 text-4xl font-bold">Spotify Demo</h1>
@@ -21,13 +20,7 @@ const Welcome = ({ code, handleClick, loading }: WelcomeType) => {
         ) : (
           <FaSpotify size={28} />
         )}
-        <h2>
-          {loading
-            ? 'Fetching data...'
-            : !code
-              ? 'Login with Spotify'
-              : 'Get your Spotify data'}
-        </h2>
+        <h2>{loading ? 'Fetching data...' : 'Login with Spotify'}</h2>
       </button>
     </Fragment>
   );
